@@ -16,8 +16,10 @@ public class MaxHeap<T extends Comparable<T>> {
   }
 
   private void swim(int k) {
+    System.out.println("^^^ Swim "+k);
     while (k > 1 && v[k / 2].compareTo(v[k]) < 0) {
-      System.out.println("Swap " + v[k] + " with " + v[k / 2] + " " + k);
+      System.out.println("  Troca v["+k+"] ("+v[k]+") com v["+k/2
+        +"] ("+v[k/2]+")");
       T tmp = v[k];
       v[k] = v[k / 2];
       v[k / 2] = tmp;
@@ -32,12 +34,15 @@ public class MaxHeap<T extends Comparable<T>> {
   }
 
   private void sink(int k, int n) {
+    System.out.println("VVV Sink "+k);
     while (2 * k <= n) {
       int j = 2 * k;
       if (j < n && v[j].compareTo(v[j + 1]) < 0)
         j++;
       if (v[k].compareTo(v[j])>=0)
         break;
+      System.out.println("  Troca v["+k+"] ("+v[k]+") com v["+j
+        +"] ("+v[j]+")");
       T tmp = v[k];
       v[k] = v[j];
       v[j] = tmp;
@@ -81,7 +86,7 @@ public class MaxHeap<T extends Comparable<T>> {
 
   public void print() {
     System.out.println("");
-    print(1, 1, 32);
+    print(1, 1, 40);
     System.out.println("");
   }
 
@@ -89,5 +94,30 @@ public class MaxHeap<T extends Comparable<T>> {
     for (int i = 0; i < size; i++)
       System.out.print(v[i] + " ");
     System.out.println();
+  }
+
+  public void sort(T[] values)
+  {
+    v = values;
+    size = values.length-1;
+
+    System.out.println("1. Construção do maxheap");
+    for(int pos=size/2; pos>=1; pos--) {
+      sink(pos, size);
+    }
+
+    System.out.println();
+    System.out.println("2. Ordenação");
+    int n = size;
+    while(n>1) {
+      // Troca v[1] com v[n]
+      System.out.println(">>> Troca v[1] ("+v[1]+") com v["+n
+        +"] ("+v[n]+")");
+      T temp = v[1];
+      v[1] = v[n];
+      v[n] = temp;
+      n--;
+      sink(1,n);
+    }
   }
 }
