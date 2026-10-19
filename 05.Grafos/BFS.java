@@ -25,6 +25,12 @@ public class BFS {
         // return false;
     }
 
+    public int distTo(String v) {
+        if(!distTo.containsKey(v))
+            return -1; // Não existe
+        return distTo.get(v);
+    }
+
     public List<String> pathTo(String v) {
         List<String> path = new LinkedList<>();
 
@@ -37,17 +43,20 @@ public class BFS {
         return path;
     }
 
-    private void bfs(Graph g, String v) {
+    private void bfs(Graph g, String u) {
         LinkedList<String> fila = new LinkedList<>();
-        marked.add(v);
-        fila.add(v); // insere vértice inicial na fila
-        distTo.put(v, 0); // distância do vértice inicial a ele mesmo é 0!
+        marked.add(u);
+        fila.add(u); // insere vértice inicial na fila
+        distTo.put(u, 0); // distância do vértice inicial a ele mesmo é 0!
         while (!fila.isEmpty()) {
+            u = fila.removeFirst();
             // Para cada vizinho não visitado...
-            for (String w : g.getAdj(v)) {
-                if (!marked.contains(w)) {
-                    // System.out.println(" >> Vou visitar " + w);
-                    edgeTo.put(w, v); // indica que viemos de v para w
+            for (String v : g.getAdj(u)) {
+                if (!marked.contains(v)) {
+                    marked.add(v); // marca o vértice
+                    distTo.put(v, distTo.get(u) + 1);
+                    edgeTo.put(v, u); // indica que viemos de u para v
+                    fila.add(v); // e inclui este vizinho na fila!
                 }
             }
         }

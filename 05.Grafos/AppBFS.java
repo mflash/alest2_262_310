@@ -9,10 +9,10 @@ public class AppBFS {
             for(String w: bfs.pathTo(v)) {
                 System.out.print(w+" ");
             }
-            System.out.println();
+            System.out.println(" - dist: "+bfs.distTo(v));
         }
         else {
-            System.out.println("SEM CAMINHO");
+            System.out.println("SEM CAMINHO - "+bfs.distTo(v));
         }
     }
    } 
