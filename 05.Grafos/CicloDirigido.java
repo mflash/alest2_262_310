@@ -31,21 +31,24 @@ public class CicloDirigido {
     }
 
     private boolean dfs(Graph g, String v) {
-        // System.out.println("Entrando no vértice " + v);
+        System.out.println("Entrando no vértice " + v);
         cores.put(v, Cor.GRAY);
         // Para cada vizinho não visitado...
         for (String w : g.getAdj(v)) {
-            if (cores.get(w) == Cor.WHITE) {
-                // System.out.println("  >> Vou visitar " + w);
-                edgeTo.put(w, v); // indica que viemos de v para w
-                dfs(g, w);
+            // Se for cinza, é ciclo!
+            if (cores.get(w) == Cor.GRAY) {
+                System.out.println("Ciclo detectado ao verificar o vértice "+w);
+                return true;
             }
-            else {
-                // ...
+            if (cores.get(w) == Cor.WHITE) {
+                System.out.println("  >> Vou visitar " + w);
+                edgeTo.put(w, v); // indica que viemos de v para w
+                if(dfs(g, w))
+                    return true;
             }
         }
         cores.put(v, Cor.BLACK);
-        // System.out.println("Saindo do vértice " + v);
+        System.out.println("Saindo do vértice " + v);
         return false;
     }
 }

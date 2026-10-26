@@ -6,7 +6,7 @@ import java.util.Set;
 public class CicloNaoDirigido {
     private Set<String> marked; // indica se foi vértice já foi visitado
     private Map<String, String> edgeTo; // antecessor de cada vértice no caminho
-    private Boolean cicloEncontrado;
+    private boolean cicloEncontrado;
 
     public CicloNaoDirigido(Graph g) {
         cicloEncontrado = false;
@@ -27,17 +27,22 @@ public class CicloNaoDirigido {
     }
 
     private boolean dfs(Graph g, String v) {
-        // System.out.println("Entrando no vértice " + v);
+        System.out.println("Entrando no vértice " + v);
         marked.add(v);
         // Para cada vizinho não visitado...
         for (String w : g.getAdj(v)) {
             if (!marked.contains(w)) {
-                // System.out.println("  >> Vou visitar " + w);
+                System.out.println("  >> Vou visitar " + w);
                 edgeTo.put(w, v); // indica que viemos de v para w
-                dfs(g, w);
+                if(dfs(g, w))
+                    return true;
+            }
+            else if(w != edgeTo.get(v)) {
+                System.out.println("Ciclo detectado na aresta "+v+"-"+w);
+                return true;
             }
         }
-        // System.out.println("Saindo do vértice " + v);
+        System.out.println("Saindo do vértice " + v);
         return false;
     }
 }
