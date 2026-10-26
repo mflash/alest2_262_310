@@ -8,7 +8,7 @@ public class CicloNaoDirigido {
     private Map<String, String> edgeTo; // antecessor de cada vértice no caminho
     private Boolean cicloEncontrado;
 
-    public CicloNaoDirigido(Graph g, String start) {
+    public CicloNaoDirigido(Graph g) {
         cicloEncontrado = false;
 
         marked = new HashSet<>();
